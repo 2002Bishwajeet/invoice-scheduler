@@ -66,6 +66,7 @@ This will generate a PDF invoice in the `invoices/` folder and send it via email
 
 ## GitHub Actions Automation
 
+
 This project includes a workflow to generate and commit invoices automatically on the 1st of every month.
 
 - Workflow file: `.github/workflows/monthly-invoice.yml`
@@ -77,9 +78,25 @@ This project includes a workflow to generate and commit invoices automatically o
   - Runs the invoice generator
   - Commits and pushes new invoices and updated `data.json`
 
+
+### Setting Up Repository Secrets for GitHub Actions
+
+To run the workflow successfully, you must add the required environment variables as repository secrets in GitHub:
+
+1. Go to your repository on GitHub.
+2. Click on **Settings** > **Secrets and variables** > **Actions**.
+3. Click **New repository secret** for each of the following keys:
+   - `CLIENTAUTHTOKEN`
+   - `SHAREDSECRET`
+   - `IDENTITY`
+   - `RECIPIENT`
+4. Enter the value for each secret as required by your setup.
+
+These secrets will be used by the GitHub Actions workflow to generate a `.env` file at runtime, ensuring your credentials and sensitive data are never exposed in the repository.
+
 **To enable automation:**
 
-- Ensure your repository has the required secrets for email/auth (if needed)
+- Ensure your repository has the required secrets for email/auth (see above)
 - Push your `.env` and `data.json` files locally, but keep them in `.gitignore` to avoid leaking secrets
 
 ## Sample `data.json`
