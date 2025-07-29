@@ -20,10 +20,14 @@ jobs:
           fetch-depth: 0
 
       - name: Ensure data.json exists
+        id: ensure_datajson
         run: |
           if [ ! -f data.json ]; then
             echo "::warning file=data.json::No data.json found at repo root. Using data.example.json as data.json for this run."
             cp data.example.json data.json
+            echo "USED_EXAMPLE_DATAJSON=true" >> $GITHUB_ENV
+          else
+            echo "USED_EXAMPLE_DATAJSON=false" >> $GITHUB_ENV
           fi
 
       - name: Set up .NET
@@ -67,6 +71,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Add and commit new/changed files
+        if: env.USED_EXAMPLE_DATAJSON == 'false'
         run: |
           git add invoices/*.pdf
           if [ -f data.json ]; then
