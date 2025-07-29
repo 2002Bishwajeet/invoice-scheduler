@@ -31,8 +31,32 @@ jobs:
         with:
           dotnet-version: "9.0.x"
 
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Cache .NET build output
+        uses: actions/cache@v4
+        with:
+          path: |
+            **/bin
+            **/obj
+          key: ${{ runner.os }}-dotnet-build-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-dotnet-build-
+
       - name: Restore dependencies
         run: dotnet restore InvoiceScheduler.sln
+
+      - name: Format code
+        run: dotnet format --verify-no-changes
+
+      - name: Build
+        run: dotnet build InvoiceScheduler.sln --no-restore --configuration Release
 
       - name: Run Invoice Generator
         run: dotnet run --project InvoiceScheduler/InvoiceScheduler.csproj

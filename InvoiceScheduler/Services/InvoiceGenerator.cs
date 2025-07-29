@@ -36,7 +36,18 @@ public class InvoiceGenerator
 
 
             // Use data.json from the top-level repository directory
-            var dataJsonPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "data.json"));
+            string dataJsonPath;
+            var isRider = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("RIDER_ENGINE"));
+            if (isRider)
+            {
+                // Rider runs from project root, so use bin-relative path
+                dataJsonPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "data.json"));
+            }
+            else
+            {
+                // CLI and most IDEs: use current working directory (repo root)
+                dataJsonPath = Path.Combine(Directory.GetCurrentDirectory(), "data.json");
+            }
             var jsonContent = await File.ReadAllTextAsync(dataJsonPath);
             var data = JsonConvert.DeserializeObject<InvoiceData>(jsonContent)
                       ?? throw new InvalidOperationException("Failed to deserialize invoice data");
