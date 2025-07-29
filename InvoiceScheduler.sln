@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceScheduler", "InvoiceScheduler\InvoiceScheduler.csproj", "{B7110C9F-37F9-45CF-8C3E-24E7BF7A5BAC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B7110C9F-37F9-45CF-8C3E-24E7BF7A5BAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7110C9F-37F9-45CF-8C3E-24E7BF7A5BAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7110C9F-37F9-45CF-8C3E-24E7BF7A5BAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7110C9F-37F9-45CF-8C3E-24E7BF7A5BAC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,25 @@
+{
+  "yourName": "John Doe",
+  "yourEmail": "john.doe@example.com",
+  "yourWebsite": "johndoe.com",
+  "taxId": "ABCD1234E",
+  "yourAddress": "123 Main St\n Springfield\n USA",
+  "clientName": "Acme Corporation",
+  "clientAddress": "456 Elm St\n Metropolis\n USA",
+  "invoiceNumber": "INV-001",
+  "currency": "USD",
+  "notes": "Bank Details:\nJOHN DOE\nA/C NO: 1234567890\nIFSC: ABCD0123456\nBank Address: 789 Bank Ave, Springfield, USA",
+  "services": [
+    {
+      "description": "Web Development",
+      "quantity": "10",
+      "rate": "100"
+    },
+    {
+      "description": "Consulting",
+      "quantity": "5",
+      "rate": "200"
+    }
+  ],
+  "savedAt": "2025-01-01T00:00:00.000Z"
+}

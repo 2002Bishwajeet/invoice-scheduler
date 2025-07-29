@@ -1,0 +1,42 @@
+name: Monthly Invoice Generation
+
+on:
+  schedule:
+    - cron: "0 6 1 * *" # At 06:00 on day-of-month 1
+  workflow_dispatch:
+
+jobs:
+  generate-invoice:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "9.0.x"
+
+      - name: Restore dependencies
+        run: dotnet restore InvoiceScheduler.sln
+
+      - name: Run Invoice Generator
+        run: dotnet run --project InvoiceScheduler/InvoiceScheduler.csproj
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Add and commit new/changed files
+        run: |
+          git add InvoiceScheduler/invoices/*.pdf
+          git add InvoiceScheduler/data.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: monthly invoice generated [skip ci]"
+            git push
+          fi
