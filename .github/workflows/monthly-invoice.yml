@@ -19,6 +19,19 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Fail if required env vars are missing
+        run: |
+          missing=0
+          for var in CLIENTAUTHTOKEN SHAREDSECRET IDENTITY RECIPIENT; do
+            if [ -z "${!var}" ]; then
+              echo "::error file=.github/workflows/monthly-invoice.yml::Required environment variable $var is not set."
+              missing=1
+            fi
+          done
+          if [ "$missing" -eq 1 ]; then
+            exit 1
+          fi
+
       - name: Ensure data.json exists
         id: ensure_datajson
         run: |
