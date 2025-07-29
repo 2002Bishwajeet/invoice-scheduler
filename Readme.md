@@ -2,7 +2,7 @@
 
 InvoiceScheduler is an automated tool for generating and emailing monthly invoices as PDFs. It uses PuppeteerSharp to fill out an online invoicer form with your data, generates a PDF, and sends it to your client. The process can be run locally or automated via GitHub Actions for scheduled, hands-free invoicing.
 
-> **Note:**  
+> [!NOTE]
 > This project is intended for to be used with the Homebase projects only.
 
 ## Features
