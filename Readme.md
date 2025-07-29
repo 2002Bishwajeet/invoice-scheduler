@@ -66,7 +66,6 @@ This will generate a PDF invoice in the `invoices/` folder and send it via email
 
 ## GitHub Actions Automation
 
-
 This project includes a workflow to generate and commit invoices automatically on the 1st of every month.
 
 - Workflow file: `.github/workflows/monthly-invoice.yml`
@@ -77,7 +76,6 @@ This project includes a workflow to generate and commit invoices automatically o
   - Restores dependencies
   - Runs the invoice generator
   - Commits and pushes new invoices and updated `data.json`
-
 
 ### Setting Up Repository Secrets for GitHub Actions
 
