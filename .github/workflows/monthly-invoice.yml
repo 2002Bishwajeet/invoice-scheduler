@@ -19,20 +19,20 @@ jobs:
         with:
           fetch-depth: 0
 
-      # - name: Fail if required secrets are missing
-      #   run: |
-      #     # These env vars are set from GitHub secrets at the job level above.
-      #     # This check ensures the workflow fails early if any required secret is missing.
-      #     missing=0
-      #     for var in CLIENTAUTHTOKEN SHAREDSECRET IDENTITY RECIPIENT; do
-      #       if [ -z "${!var}" ]; then
-      #         echo "::error file=.github/workflows/monthly-invoice.yml::Required secret $var is not set as an environment variable."
-      #         missing=1
-      #       fi
-      #     done
-      #     if [ "$missing" -eq 1 ]; then
-      #       exit 1
-      #     fi
+      - name: Fail if required secrets are missing
+        run: |
+          # These env vars are set from GitHub secrets at the job level above.
+          # This check ensures the workflow fails early if any required secret is missing.
+          missing=0
+          for var in CLIENTAUTHTOKEN SHAREDSECRET IDENTITY RECIPIENT; do
+            if [ -z "${!var}" ]; then
+              echo "::error file=.github/workflows/monthly-invoice.yml::Required secret $var is not set as an environment variable."
+              missing=1
+            fi
+          done
+          if [ "$missing" -eq 1 ]; then
+            exit 1
+          fi
 
       - name: Create .env file from secrets
         run: |
