@@ -8,11 +8,23 @@ on:
 jobs:
   generate-invoice:
     runs-on: ubuntu-latest
+    env:
+      CLIENTAUTHTOKEN: ${{ secrets.CLIENTAUTHTOKEN }}
+      SHAREDSECRET: ${{ secrets.SHAREDSECRET }}
+      IDENTITY: ${{ secrets.IDENTITY }}
+      RECIPIENT: ${{ secrets.RECIPIENT }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Ensure data.json exists
+        run: |
+          if [ ! -f data.json ]; then
+            echo "::warning file=data.json::No data.json found at repo root. Using data.example.json as data.json for this run."
+            cp data.example.json data.json
+          fi
 
       - name: Set up .NET
         uses: actions/setup-dotnet@v4
@@ -32,8 +44,13 @@ jobs:
 
       - name: Add and commit new/changed files
         run: |
-          git add InvoiceScheduler/invoices/*.pdf
-          git add InvoiceScheduler/data.json
+          git add invoices/*.pdf
+          if [ -f data.json ]; then
+            # Only add data.json if it existed before this run (not if it was copied from data.example.json)
+            if git ls-files --error-unmatch data.json > /dev/null 2>&1; then
+              git add data.json
+            fi
+          fi
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
