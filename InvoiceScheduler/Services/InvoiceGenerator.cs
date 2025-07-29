@@ -64,7 +64,8 @@ public class InvoiceGenerator
 
             var browser = await Puppeteer.LaunchAsync(new LaunchOptions
             {
-                Headless = true
+                Headless = true,
+                Args = new[] { "--no-sandbox" }
             });
 
             var page = await browser.NewPageAsync();
