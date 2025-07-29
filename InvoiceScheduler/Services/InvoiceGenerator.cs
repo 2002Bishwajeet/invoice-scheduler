@@ -34,8 +34,10 @@ public class InvoiceGenerator
 
             Console.WriteLine("Loading invoice data...");
 
-            // Load the JSON file
-            var jsonContent = await File.ReadAllTextAsync("data.json");
+
+            // Use data.json from the top-level repository directory
+            var dataJsonPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "data.json"));
+            var jsonContent = await File.ReadAllTextAsync(dataJsonPath);
             var data = JsonConvert.DeserializeObject<InvoiceData>(jsonContent)
                       ?? throw new InvalidOperationException("Failed to deserialize invoice data");
 
@@ -102,12 +104,16 @@ public class InvoiceGenerator
 
             Console.WriteLine("Saving PDF to file...");
 
+
             await File.WriteAllBytesAsync(filePath, pdfBytes);
 
             Console.WriteLine("Closing browser...");
             await browser.CloseAsync();
 
             Console.WriteLine("Invoice PDF generated successfully!");
+            // Write updated data.json back to the top-level directory if needed
+            var updatedJson = JsonConvert.SerializeObject(data, Formatting.Indented);
+            await File.WriteAllTextAsync(dataJsonPath, updatedJson);
             return filePath;
         }
         catch (Exception error)

@@ -89,7 +89,7 @@ This project includes a workflow to generate and commit invoices automatically o
 > - This tool generates invoices using the following website: [invoicer.cloudx.run](https://invoicer.cloudx.run/)
 > - For more details on the `data.json` structure and Puppeteer integration, see the [Puppeteer Integration section of the related GitHub README](https://github.com/2002Bishwajeet/serverless-functions/tree/main/functions/invoice_generator#setup-puppeteer-pdf-generation).
 
-See [`data.example.json`](./InvoiceScheduler/data.example.json) for a complete sample `data.json` file.
+See [`data.example.json`](./data.example.json) for a complete sample `data.json` file.
 
 ## Usage Notes
 

@@ -27,14 +27,15 @@ try
     var emailProvider = new EmailProvider();
     await emailProvider.SendInvoiceEmailAsync(pdfPath);
 
-    // once email is sent, update the json
-    var jsonContent = await File.ReadAllTextAsync("data.json");
+    // once email is sent, update the json at the top-level directory
+    var dataJsonPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "data.json"));
+    var jsonContent = await File.ReadAllTextAsync(dataJsonPath);
     var data = JsonConvert.DeserializeObject<InvoiceData>(jsonContent)
               ?? throw new InvalidOperationException("Failed to deserialize invoice data");
     // Update invoice number to match the one just used
     data.InvoiceNumber = Utils.GenerateInvoiceNumber();
     var updatedJson = JsonConvert.SerializeObject(data, Formatting.Indented);
-    await File.WriteAllTextAsync("data.json", updatedJson);
+    await File.WriteAllTextAsync(dataJsonPath, updatedJson);
     Console.WriteLine("data.json updated with new invoice number.");
 }
 catch (Exception ex)
