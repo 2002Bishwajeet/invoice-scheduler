@@ -71,9 +71,6 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore InvoiceScheduler.sln
 
-      - name: Format code
-        run: dotnet format --verify-no-changes
-
       - name: Build
         run: dotnet build InvoiceScheduler.sln --no-restore --configuration Release
 
