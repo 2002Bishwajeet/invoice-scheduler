@@ -18,9 +18,17 @@ public class InvoiceGenerator
     {
         try
         {
-            // Compute the invoice file path for the current month and year
-            var invoicesDir = Path.Combine(AppContext.BaseDirectory, "..", "invoices");
-            invoicesDir = Path.GetFullPath(invoicesDir);
+            // Compute the invoice file path for the previous month and year in repo-relative directory
+            var repoRoot = Environment.GetEnvironmentVariable("REPO_ROOT");
+            if (string.IsNullOrEmpty(repoRoot))
+            {
+                repoRoot = Directory.GetCurrentDirectory();
+            }
+            var invoicesDir = Path.Combine(repoRoot, "InvoiceScheduler", "invoices");
+            if (!Directory.Exists(invoicesDir))
+            {
+                Directory.CreateDirectory(invoicesDir);
+            }
             var monthYear = GetMonthYearString(DateTime.Now);
             var fileName = $"invoice-{monthYear}.pdf";
             var filePath = Path.Combine(invoicesDir, fileName);

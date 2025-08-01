@@ -112,6 +112,31 @@ See [`data.example.json`](./data.example.json) for a complete sample `data.json`
 - Make sure your `.env` and `data.json` are up to date before each run.
 - All generated invoices are saved in the `invoices/` directory.
 
+## Invoice Save Location
+
+Invoices are saved in the `InvoiceScheduler/invoices/` directory.
+
+### Local Usage
+
+By default, invoices are saved in `InvoiceScheduler/invoices/` relative to your current working directory. No configuration is needed for local runs.
+
+### CI/Workflow Usage
+
+In GitHub Actions, the workflow sets the `REPO_ROOT` environment variable to the repository root. This ensures invoices are saved in the correct location for automatic commit and push.
+
+**Example workflow configuration:**
+
+```yaml
+env:
+  REPO_ROOT: ${{ github.workspace }}
+```
+
+### Customization
+
+If you want to override the save location, set the `REPO_ROOT` environment variable to your desired path before running the invoice generator.
+
+---
+
 ## License
 
 This project is licensed under the terms of the MIT License. See the [LICENSE](LICENSE) file for details.

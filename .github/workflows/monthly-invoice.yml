@@ -9,6 +9,7 @@ jobs:
   generate-invoice:
     runs-on: ubuntu-latest
     env:
+      REPO_ROOT: ${{ github.workspace }}
       CLIENTAUTHTOKEN: ${{ secrets.CLIENTAUTHTOKEN }}
       SHAREDSECRET: ${{ secrets.SHAREDSECRET }}
       IDENTITY: ${{ secrets.IDENTITY }}
