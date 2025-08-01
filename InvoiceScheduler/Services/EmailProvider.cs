@@ -156,7 +156,7 @@ public class EmailProvider
         // let's verify the token first
         if (!await client.VerifyToken())
         {
-            throw new Exception("Invalid client authentication token"); 
+            throw new Exception("Invalid client authentication token");
         }
 
         var uniqueId = Guid.NewGuid();
@@ -180,7 +180,7 @@ public class EmailProvider
                 UnEncryptedMessage = $"{myName} sent you an invoice",
             },
         };
-        
+
 
         var message = new RichText {
             new RichTextNode {
@@ -198,7 +198,7 @@ public class EmailProvider
         {
             OriginId = originId.ToString(),
             ThreadId = threadId.ToString(),
-            Subject = $"Invoice {GetMonthYearString(DateTime.Now)}",
+            Subject = $"Invoice {GetPreviousMonthDate(DateTime.Now)}",
             Message = message,
             Recipients = [recipientId.DomainName],
             Sender = identityId.DomainName,
@@ -215,7 +215,7 @@ public class EmailProvider
 
         var shouldEmbedContent = mailConversationJson.ToUtf8ByteArray().Length < MaxHeaderContentBytes;
         var keyHeader = KeyHeader.NewRandom16();
-    
+
         var payloads = new List<UploadablePayloadDefinition>();
         // Read the PDF file as a byte array
         if (!shouldEmbedContent)
@@ -233,7 +233,7 @@ public class EmailProvider
         }
 
         var pdfBytes = await File.ReadAllBytesAsync(pdfPath);
-        
+
         // Add the PDF as a payload
         var pdfPayload = new UploadablePayloadDefinition
         {
@@ -271,12 +271,12 @@ public class EmailProvider
         };
 
 
-       var response = await client.Drive.UploadNewEncryptedFile(MailDrive,keyHeader, uploadFileMetadata, uploadManifest, payloads,transitOptions);
-       if (!response.response.IsSuccessStatusCode)
-       {
+        var response = await client.Drive.UploadNewEncryptedFile(MailDrive, keyHeader, uploadFileMetadata, uploadManifest, payloads, transitOptions);
+        if (!response.response.IsSuccessStatusCode)
+        {
 
             Console.WriteLine($"Error sending email: {response.response.Error.Content}");
-           
+
             throw new InvalidOperationException($"Failed to send email: {response.response.ReasonPhrase}");
         }
 
@@ -285,10 +285,10 @@ public class EmailProvider
 
         // Optionally, you can log or return the response
         Console.WriteLine($"Email sent successfully to {envConfig.Recipient} with unique ID: {uniqueId}");
-        
+
         // Optionally, you can return the mail conversation for further processing
         return;
-       
+
     }
 
     private static readonly HttpClient HttpClient = new HttpClient();

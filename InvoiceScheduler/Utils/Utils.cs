@@ -27,7 +27,18 @@ public static class Utils
         var year = date.Year;
         return $"{month}-{year}";
     }
-    
-        public const string Defaultpayloadkey = "dflt_key";
-        public const int MaxHeaderContentBytes = 7000;
+
+    /// <summary>
+    /// Returns the first day of the previous month based on the given date (or now if not provided).
+    /// </summary>
+    /// <param name="reference">The reference date. If null, uses DateTime.Now.</param>
+    /// <returns>DateTime for the first day of the previous month.</returns>
+    public static DateTime GetPreviousMonthDate(DateTime? reference = null)
+    {
+        var date = reference ?? DateTime.Now;
+        return new DateTime(date.Year, date.Month, 1).AddMonths(-1);
+    }
+
+    public const string Defaultpayloadkey = "dflt_key";
+    public const int MaxHeaderContentBytes = 7000;
 }

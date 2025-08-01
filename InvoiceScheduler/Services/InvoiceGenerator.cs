@@ -21,7 +21,7 @@ public class InvoiceGenerator
             // Compute the invoice file path for the current month and year
             var invoicesDir = Path.Combine(AppContext.BaseDirectory, "..", "invoices");
             invoicesDir = Path.GetFullPath(invoicesDir);
-            var monthYear = GetMonthYearString(DateTime.Now);
+            var monthYear = GetPreviousMonthDate(DateTime.Now);
             var fileName = $"invoice-{monthYear}.pdf";
             var filePath = Path.Combine(invoicesDir, fileName);
 
