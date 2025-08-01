@@ -92,11 +92,11 @@ jobs:
       - name: Add and commit new/changed files
         if: env.USED_EXAMPLE_DATAJSON == 'false'
         run: |
-          git add invoices/*.pdf
+          git add invoices/*.pdf || true
           if [ -f data.json ]; then
             # Only add data.json if it existed before this run (not if it was copied from data.example.json)
             if git ls-files --error-unmatch data.json > /dev/null 2>&1; then
-              git add data.json
+              git add data.json || true
             fi
           fi
           if git diff --cached --quiet; then
