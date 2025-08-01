@@ -37,9 +37,7 @@ public static class Utils
     {
         var date = reference ?? DateTime.Now;
         var previousMonthDate = new DateTime(date.Year, date.Month, 1).AddMonths(-1);
-        var monthName = previousMonthDate.ToString("MMMM");
-        var year = previousMonthDate.Year;
-        return $"{monthName}-{year}";
+        return previousMonthDate.ToString("MMMM");
     }
 
     public const string Defaultpayloadkey = "dflt_key";
