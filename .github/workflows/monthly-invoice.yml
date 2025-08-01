@@ -41,6 +41,7 @@ jobs:
           echo "SHAREDSECRET=$SHAREDSECRET" >> .env
           echo "IDENTITY=$IDENTITY" >> .env
           echo "RECIPIENT=$RECIPIENT" >> .env
+          echo "REPO_ROOT=$REPO_ROOT" >> .env
 
       - name: Ensure data.json exists
         id: ensure_datajson

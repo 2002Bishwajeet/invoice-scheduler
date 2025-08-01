@@ -97,6 +97,24 @@ These secrets will be used by the GitHub Actions workflow to generate a `.env` f
 - Ensure your repository has the required secrets for email/auth (see above)
 - Push your `.env` and `data.json` files locally, but keep them in `.gitignore` to avoid leaking secrets
 
+### Environment Variable Setup
+
+All required environment variables, including `REPO_ROOT`, are automatically written to the `.env` file by the GitHub Actions workflow and should be present for local development as well. You do not need to set `REPO_ROOT` manually if you use the provided workflow or `.env` template.
+
+**.env example:**
+
+```
+CLIENTAUTHTOKEN=...
+SHAREDSECRET=...
+IDENTITY=...
+RECIPIENT=...
+REPO_ROOT=/home/runner/work/invoice-scheduler-biswa/invoice-scheduler-biswa
+```
+
+Your code will use `REPO_ROOT` from the `.env` file to determine where invoices are saved, making the setup robust and portable for both local and CI runs.
+
+---
+
 ## Sample `data.json`
 
 > **Note:**
