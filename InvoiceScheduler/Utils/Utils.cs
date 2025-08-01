@@ -23,9 +23,9 @@ public static class Utils
     /// <returns>A formatted month-year string.</returns>
     public static string GetMonthYearString(DateTime date)
     {
-        var month = date.Month.ToString().PadLeft(2, '0');
+        var monthName = date.ToString("MMMM");
         var year = date.Year;
-        return $"{month}-{year}";
+        return $"{monthName}-{year}";
     }
 
     /// <summary>
@@ -33,10 +33,13 @@ public static class Utils
     /// </summary>
     /// <param name="reference">The reference date. If null, uses DateTime.Now.</param>
     /// <returns>DateTime for the first day of the previous month.</returns>
-    public static DateTime GetPreviousMonthDate(DateTime? reference = null)
+    public static string GetPreviousMonthDate(DateTime? reference = null)
     {
         var date = reference ?? DateTime.Now;
-        return new DateTime(date.Year, date.Month, 1).AddMonths(-1);
+        var previousMonthDate = new DateTime(date.Year, date.Month, 1).AddMonths(-1);
+        var monthName = previousMonthDate.ToString("MMMM");
+        var year = previousMonthDate.Year;
+        return $"{monthName}-{year}";
     }
 
     public const string Defaultpayloadkey = "dflt_key";
